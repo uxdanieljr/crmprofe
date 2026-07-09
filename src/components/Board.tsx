@@ -52,7 +52,7 @@ export function Board({ initialColumns }: { initialColumns: ColumnWithLeads[] })
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-6 overflow-x-auto pb-8 pt-4 snap-x">
+      <div className="flex gap-6 overflow-x-auto pb-8 pt-4 snap-x flex-1 items-start min-h-[calc(100vh-100px)]">
         {columns.map((column) => (
           <div key={column.id} className="min-w-[320px] w-[320px] bg-white/60 backdrop-blur-md rounded-2xl p-4 flex flex-col max-h-[85vh] snap-center border border-white/80 shadow-sm">
             <div className="flex justify-between items-center mb-4 px-1">

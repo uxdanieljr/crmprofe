@@ -22,19 +22,18 @@ export default async function Home() {
           <a
             href="/api/backup"
             download="database.db"
-            className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-lg border border-slate-200 transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-secondary/50 hover:bg-secondary px-4 py-2 rounded-lg border border-border/50 transition-colors"
           >
             <Download size={16} />
             Backup Local
           </a>
+          <LeadForm />
         </div>
       </header>
 
-      <main className="flex-1 overflow-hidden px-6 flex flex-col">
+      <main className="flex-1 px-6 flex flex-col">
         <Board initialColumns={columns} />
       </main>
-
-      <LeadForm />
     </div>
   )
 }

@@ -50,9 +50,9 @@ export function LeadForm() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="fixed bottom-8 right-8 h-14 rounded-full shadow-lg hover:scale-105 transition-all flex items-center gap-2 group z-50 px-6 bg-primary text-primary-foreground font-medium">
-        <PlusCircle size={20} />
-        <span className="font-semibold group-hover:block hidden">Novo Lead</span>
+      <DialogTrigger className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 rounded-md shadow-sm text-sm font-medium transition-colors">
+        <PlusCircle size={18} />
+        <span>Adicionar aluno</span>
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-[425px]">
