@@ -155,8 +155,10 @@ export function Board({ initialColumns }: { initialColumns: ColumnWithLeads[] })
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`flex-1 overflow-y-auto min-h-[150px] transition-colors duration-200 rounded-xl p-1
-                      ${snapshot.isDraggingOver ? 'bg-primary/5' : 'bg-transparent'}`}
+                    className={`flex-1 overflow-y-auto min-h-[150px] rounded-xl p-1 transition-all duration-150
+                      ${snapshot.isDraggingOver 
+                        ? 'bg-primary/15 ring-2 ring-primary/40 ring-inset' 
+                        : 'bg-transparent'}`}
                   >
                     {column.leads.map((lead, index) => (
                       <LeadCard key={lead.id} lead={lead} index={index} />

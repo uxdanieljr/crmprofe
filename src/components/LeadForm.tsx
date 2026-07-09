@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createLead } from '@/app/actions'
 import { PlusCircle, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -26,6 +27,7 @@ import {
 export function LeadForm() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
 
   async function actionForm(formData: FormData) {
     setIsSubmitting(true)
@@ -40,6 +42,7 @@ export function LeadForm() {
       })
       toast.success('Lead cadastrado com sucesso!')
       setIsOpen(false)
+      router.refresh()
     } catch (error) {
       console.error(error)
       toast.error('Erro ao cadastrar lead.')

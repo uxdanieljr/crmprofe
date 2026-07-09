@@ -2,10 +2,27 @@ import { getColumns } from './actions'
 import { Board } from '@/components/Board'
 import { LeadForm } from '@/components/LeadForm'
 import { Download, GraduationCap } from 'lucide-react'
+import { prisma } from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
 
+const DEFAULT_COLUMNS = [
+  { name: 'Novo Lead', position: 1, is_deletable: true },
+  { name: 'Fila de Espera', position: 2, is_deletable: true },
+  { name: 'Em Negociação', position: 3, is_deletable: true },
+  { name: 'Convertido', position: 4, is_deletable: false },
+  { name: 'Perdido', position: 5, is_deletable: false },
+]
+
+async function ensureColumns() {
+  const count = await prisma.column.count()
+  if (count === 0) {
+    await prisma.column.createMany({ data: DEFAULT_COLUMNS })
+  }
+}
+
 export default async function Home() {
+  await ensureColumns()
   const columns = await getColumns()
 
   return (
