@@ -3,6 +3,8 @@ import { Board } from '@/components/Board'
 import { LeadForm } from '@/components/LeadForm'
 import { Download, GraduationCap } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const columns = await getColumns()
 
