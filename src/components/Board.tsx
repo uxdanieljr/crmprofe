@@ -54,15 +54,15 @@ export function Board({ initialColumns }: { initialColumns: ColumnWithLeads[] })
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex gap-6 overflow-x-auto pb-8 pt-4 snap-x">
         {columns.map((column) => (
-          <div key={column.id} className="min-w-[320px] w-[320px] bg-slate-50/80 backdrop-blur-sm rounded-2xl p-4 flex flex-col max-h-[85vh] snap-center border border-slate-200/60 shadow-sm">
+          <div key={column.id} className="min-w-[320px] w-[320px] bg-white/60 backdrop-blur-md rounded-2xl p-4 flex flex-col max-h-[85vh] snap-center border border-white/80 shadow-sm">
             <div className="flex justify-between items-center mb-4 px-1">
               <div className="flex items-center gap-2">
-                <h2 className="font-bold text-slate-700 tracking-tight">{column.name}</h2>
-                <span className="bg-slate-200/70 text-slate-600 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                <h2 className="font-bold text-foreground tracking-tight">{column.name}</h2>
+                <span className="bg-white text-muted-foreground text-xs font-bold px-2.5 py-0.5 rounded-full shadow-sm">
                   {column.leads.length}
                 </span>
               </div>
-              <button className="text-slate-400 hover:text-slate-600 transition-colors cursor-grab active:cursor-grabbing">
+              <button className="text-muted-foreground hover:text-foreground transition-colors cursor-grab active:cursor-grabbing">
                 <GripHorizontal size={18} />
               </button>
             </div>

@@ -3,6 +3,25 @@
 import { useState } from 'react'
 import { createLead } from '@/app/actions'
 import { PlusCircle, Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 export function LeadForm() {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,80 +38,85 @@ export function LeadForm() {
         disponibilidade: formData.get('disponibilidade') as string,
         observacoes: formData.get('observacoes') as string,
       })
+      toast.success('Lead cadastrado com sucesso!')
       setIsOpen(false)
     } catch (error) {
       console.error(error)
-      alert('Erro ao cadastrar lead.')
+      toast.error('Erro ao cadastrar lead.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  if (!isOpen) {
-    return (
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 hover:scale-105 transition-all flex items-center gap-2 group z-50"
-      >
-        <PlusCircle size={24} />
-        <span className="font-semibold pr-2 group-hover:block hidden">Novo Lead</span>
-      </button>
-    )
-  }
-
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-          <h2 className="text-lg font-bold text-slate-800">Cadastrar Novo Lead</h2>
-          <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-600 p-1 text-2xl leading-none">&times;</button>
-        </div>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger className="fixed bottom-8 right-8 h-14 rounded-full shadow-lg hover:scale-105 transition-all flex items-center gap-2 group z-50 px-6 bg-primary text-primary-foreground font-medium">
+        <PlusCircle size={20} />
+        <span className="font-semibold group-hover:block hidden">Novo Lead</span>
+      </DialogTrigger>
+      
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle className="text-xl">Cadastrar Novo Lead</DialogTitle>
+        </DialogHeader>
         
-        <form action={actionForm} className="p-6 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Nome do Aluno *</label>
-            <input required name="name" type="text" className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" placeholder="Ex: Mateus Silva" />
+        <form action={actionForm} className="space-y-4 pt-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">Nome do Aluno <span className="text-destructive">*</span></Label>
+            <Input id="name" name="name" required placeholder="Ex: Mateus Silva" />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp *</label>
-            <input required name="whatsapp" type="tel" className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" placeholder="5511999999999" />
+          <div className="space-y-2">
+            <Label htmlFor="whatsapp">WhatsApp <span className="text-destructive">*</span></Label>
+            <Input id="whatsapp" name="whatsapp" type="tel" required placeholder="5511999999999" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Modalidade</label>
-              <select name="modalidade" className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500 bg-white">
-                <option value="online">Online</option>
-                <option value="presencial">Presencial</option>
-              </select>
+            <div className="space-y-2">
+              <Label htmlFor="modalidade">Modalidade</Label>
+              <Select name="modalidade" defaultValue="online">
+                <SelectTrigger id="modalidade">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="online">Online</SelectItem>
+                  <SelectItem value="presencial">Presencial</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Escolaridade</label>
-              <input name="escolaridade" type="text" className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500" placeholder="Opcional" />
+            <div className="space-y-2">
+              <Label htmlFor="escolaridade">Escolaridade</Label>
+              <Input id="escolaridade" name="escolaridade" placeholder="Opcional" />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Disponibilidade de Horários</label>
-            <input name="disponibilidade" type="text" className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500" placeholder="Ex: Seg e Qua após 18h" />
+          <div className="space-y-2">
+            <Label htmlFor="disponibilidade">Disponibilidade de Horários</Label>
+            <Input id="disponibilidade" name="disponibilidade" placeholder="Ex: Seg e Qua após 18h" />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Observações</label>
-            <textarea name="observacoes" rows={3} className="w-full border border-slate-200 rounded-lg p-2.5 outline-none focus:border-blue-500 resize-none" placeholder="Anotações sobre o aluno..."></textarea>
+          <div className="space-y-2">
+            <Label htmlFor="observacoes">Observações</Label>
+            <Textarea 
+              id="observacoes" 
+              name="observacoes" 
+              placeholder="Anotações sobre o aluno..."
+              className="resize-none"
+              rows={3}
+            />
           </div>
 
           <div className="pt-4 flex justify-end gap-3">
-            <button type="button" onClick={() => setIsOpen(false)} className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
               Cancelar
-            </button>
-            <button disabled={isSubmitting} type="submit" className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2">
-              {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : 'Salvar Lead'}
-            </button>
+            </Button>
+            <Button disabled={isSubmitting} type="submit">
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Salvar Lead
+            </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

@@ -7,8 +7,8 @@ export default async function Home() {
   const columns = await getColumns()
 
   return (
-    <div className="min-h-screen bg-slate-100/50 flex flex-col">
-      <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="bg-card border-b border-border/60 px-6 py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-sm">
             <GraduationCap size={24} />
