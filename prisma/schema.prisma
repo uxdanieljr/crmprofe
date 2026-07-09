@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Column {
+  id           String   @id @default(cuid())
+  name         String
+  position     Int
+  is_deletable Boolean  @default(true)
+  leads        Lead[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Lead {
+  id              String   @id @default(cuid())
+  name            String
+  whatsapp        String
+  is_online       Boolean  @default(true)
+  escolaridade    String?
+  disponibilidade String?
+  observacoes     String?
+  
+  columnId        String
+  column          Column   @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
